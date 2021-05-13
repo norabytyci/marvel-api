@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <Search @queryChanged="changedQuery" title="characters" />
-    <List title="characters" :characters="filteredList"/>
+    <Search @queryChanged="changedQuery" title="comics" />
+    <List title="comics" :characters="filteredList"/>
   </div>
 </template>
 
@@ -10,23 +10,23 @@ import Search from '@/components/Search.vue';
 import List from '@/components/List.vue';
 
 export default {
-  name: 'Home',
+  name: 'Comics',
   data() {
     return {
-      characters: [],
+      comics: [],
       query: ''
     }
   },
   async mounted() {
     for(let i = 0; i <= 100; i+=100) {
-        const data = await this.$axios.get(`/v1/public/characters?limit=100&offset=${i}`);
-        this.characters = this.characters.concat(data.data.data.results);
+        const data = await this.$axios.get(`/v1/public/comics?limit=100&offset=${i}`);
+        this.comics = this.comics.concat(data.data.data.results);
     }
   },
   computed: {
     filteredList() {
-      return this.characters.filter(char => {
-        return char.name.toLowerCase().includes(this.query.toLowerCase())
+      return this.comics.filter(char => {
+        return char.title.toLowerCase().includes(this.query.toLowerCase())
       })
     }
   },
